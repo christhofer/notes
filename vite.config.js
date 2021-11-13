@@ -5,7 +5,7 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
-  
+
   return defineConfig({
     plugins: [vue()],
     server: {
