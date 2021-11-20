@@ -7,7 +7,9 @@ export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
   return defineConfig({
-    plugins: [vue()],
+    plugins: [
+      vue(),
+    ],
     server: {
       host: process.env.VITE_SERVER_HOST,
       port: process.env.VITE_SERVER_PORT ?? 3000,

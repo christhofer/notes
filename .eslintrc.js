@@ -12,8 +12,10 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'vue/html-closing-bracket-newline': 0,
-    'vue/html-closing-bracket-spacing': 0,
+    'vue/html-closing-bracket-newline': ['warn', {
+      'singleline': 'never',
+      'multiline': 'never',
+    }],
     'vue/singleline-html-element-content-newline': 0,
     'vue/html-self-closing': ['warn', {
       'html': { normal: 'never', component: 'always' },
@@ -23,6 +25,10 @@ module.exports = {
       'multiline': {
         'max': 1,
       },
+    }],
+    'vue/script-indent': ['warn', 2, { 'baseIndent': 1 }],
+    'vue/component-name-in-template-casing': ['warn', 'kebab-case', {
+      'registeredComponentsOnly': false,
     }],
 
     'brace-style': 'warn', // [1tbs default, stroustrup, allman]
@@ -44,4 +50,12 @@ module.exports = {
     'space-infix-ops': ['warn'],
     'space-in-parens': ['warn', 'never'],
   },
+  overrides: [
+    {
+      'files': ['*.vue'],
+      'rules': {
+        'indent': 'off',
+      },
+    },
+  ],
 }

@@ -1,21 +1,57 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+  import { provide, reactive, ref } from 'vue'
+  import Toast from '@/components/Toast'
+
+  const AppToast = Toast()
+  const user = ref({
+    name: 'John Doe',
+    email: 'johndoe@example.net',
+  })
+  const tags = reactive({
+    system: [
+      { name: 'All Notes', count: 80 },
+      { name: 'Shared With Me', count: 25 },
+      { name: 'Trash', count: 5 },
+    ],
+    user: [
+      { id: 1, name: 'Game', count: 28 },
+      { id: 2, name: 'Personal', count: 32 },
+      { id: 3, name: 'Work', count: 10 },
+    ],
+  })
+  const notes = ref([
+    {
+      id: 1,
+      title: 'My Notes 1',
+      preview: 'Short preview of my notes 1...',
+      updated_at: '2021-11-18T01:00:00.0000Z',
+      tags: [1, 2],
+    },
+    {
+      id: 2,
+      title: 'My Notes 2',
+      preview: 'Short preview of my notes 2...',
+      updated_at: '2021-11-17T08:13:00.0000Z',
+      tags: [1],
+    },
+    {
+      id: 3,
+      title: 'My Notes 3',
+      preview: 'Short preview of my notes 3...',
+      updated_at: '2021-11-16T05:24:00.0000Z',
+      tags: [2],
+    },
+  ])
+
+  provide('user', user)
+  provide('tags', tags)
+  provide('notes', notes)
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <router-view />
+  <app-toast />
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="postcss" scoped>
 </style>
