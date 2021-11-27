@@ -3,6 +3,10 @@ module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
+    borderColor: theme => ({
+      ...theme('colors'),
+      DEFAULT: theme('colors.primary.700'),
+    }),
     extend: {
       colors: {
         'primary': {
@@ -26,5 +30,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@gradin/tailwindcss-scrollbar'),
+  ],
 }
