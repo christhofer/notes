@@ -74,29 +74,29 @@
 
 <template>
   <div>
-    <resizable-column class="h-screen">
+    <resizable-column class="h-screen max-h-screen overflow-hidden">
       <template #col1>
-        <div class="w-1/3 flex flex-col border" style="min-width: 400px;">
-          <div class="px-2 h-12 flex justify-between items-center border-b">
+        <div class="w-1/3 flex flex-col border" style="min-width: 240px;">
+          <div class="px-2 h-12 flex justify-between items-center border-b gap-1">
             <div>
-              <div class="font-semibold leading-tight">{{ user.name }}</div>
-              <div class="text-xs">{{ user.email }}</div>
+              <div class="truncate font-semibold leading-tight">{{ user.name }}</div>
+              <div class="truncate text-xs">{{ user.email }}</div>
             </div>
             <div class="space-x-4 text-sm font-semibold">
               <a href="#">Account</a>
               <a href="#">Logout</a>
             </div>
           </div>
-          <resizable-column class="flex-1">
+          <resizable-column class="flex-1 overflow-hidden">
             <template #col1>
-              <div class="w-1/3 border-r" style="min-width: 160px;">
+              <div class="w-1/3 border-r flex flex-col" style="min-width: 60px;">
                 <div class=" text-center py-2">
                   <div class="text-lg font-semibold">Tags</div>
                   <div class="space-x-2 text-xs">
                     <button>Reorder</button>
                   </div>
                 </div>
-                <div class="border-t border-b divide-y">
+                <div class="border-t border-b divide-y flex-1 overflow-y-auto">
                   <draggable
                     v-model="tags.all"
                     group="people"
@@ -114,7 +114,7 @@
               </div>
             </template>
             <template #col2>
-              <div class="flex-1 border-l" style="min-width: 240px;">
+              <div class="flex-1 border-l flex flex-col overflow-hidden" style="min-width: 180px;">
                 <div class="text-center py-2">
                   <div class="text-lg font-semibold">All Notes</div>
                   <div class="space-x-2 text-xs">
@@ -123,19 +123,22 @@
                     <button>Display</button>
                   </div>
                 </div>
-                <div class="border-t border-b divide-y">
+                <div class="border-t border-b divide-y flex-1 overflow-y-auto">
                   <div v-for="note in notes" :key="note.name" class="p-2">
                     <div class="flex justify-between items-center">
-                      <div>
-                        <div class="">{{ note.title }}</div>
-                        <div class="text-sm">{{ note.preview }}</div>
+                      <div class="min-w-0">
+                        <div class="truncate">{{ note.title }}</div>
+                        <div class="truncate text-sm">{{ note.preview }}</div>
                       </div>
                       <div>
                         <!--  -->
                       </div>
                     </div>
-                    <div class="text-sm mt-2">{{ note.updated_at }}</div>
-                    <div class="flex gap-2 mt-2">
+                    <div class="truncate text-sm mt-2">{{ note.updated_at }}</div>
+                    <div class="flex gap-2 mt-2 flex-wrap">
+                      <div v-for="id in note.tags" :key="id" class="px-2 py-1 text-xs rounded-full bg-primary-500 text-white dark:text-primary-200">
+                        {{ tags?.user.find(tag => tag.id === id).name }}
+                      </div>
                       <div v-for="id in note.tags" :key="id" class="px-2 py-1 text-xs rounded-full bg-primary-500 text-white dark:text-primary-200">
                         {{ tags?.user.find(tag => tag.id === id).name }}
                       </div>
