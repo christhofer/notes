@@ -3,6 +3,7 @@
   import ResizableColumn from './ResizableColumn.vue'
   import MonacoEditor from '@/views/Main/MonacoEditor.vue'
   import MarkdownPreview from '@/views/Main/MarkdownPreview.vue'
+  import draggable from 'vuedraggable'
 
   const user = inject('user')
   const tags = inject('tags')
@@ -18,6 +19,7 @@
     }
   }
   const showPreview = ref(true)
+  const drag = ref(false)
 
   const text = ref('')
 
@@ -95,14 +97,19 @@
                   </div>
                 </div>
                 <div class="border-t border-b divide-y flex-1 overflow-y-auto">
-                  <div v-for="tag in tags.system" :key="tag.name" class="p-2 flex justify-between items-center gap-1">
-                    <div class="text-sm truncate">{{ tag.name }}</div>
-                    <div class="text-xs">{{ tag.count }}</div>
-                  </div>
-                  <div v-for="tag in tags.user" :key="tag.name" class="p-2 flex justify-between items-center gap-1">
-                    <div class="text-sm truncate">{{ tag.name }}</div>
-                    <div class="text-xs">{{ tag.count }}</div>
-                  </div>
+                  <draggable
+                    v-model="tags.all"
+                    group="people"
+                    item-key="id"
+                    @start="drag=true"
+                    @end="drag=false">
+                    <template #item="{element}">
+                      <div class="p-2 flex justify-between items-center cursor-pointer border-b">
+                        <div class="text-sm">{{ element.name }}</div>
+                        <div class="text-xs">{{ element.count }}</div>
+                      </div>
+                    </template>
+                  </draggable>
                 </div>
               </div>
             </template>
