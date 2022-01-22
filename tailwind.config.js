@@ -1,6 +1,5 @@
 module.exports = {
-  mode: 'jit',
-  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     borderColor: theme => ({
@@ -22,9 +21,9 @@ module.exports = {
           '900': '#00191c',
         },
       },
-      cursor: {
-        'ew-resize': 'ew-resize',
-      },
+      // cursor: {
+      //   'ew-resize': 'ew-resize',
+      // },
     },
   },
   variants: {

@@ -18,14 +18,6 @@
       { id: 2, name: 'Personal', count: 32 },
       { id: 3, name: 'Work', count: 10 },
     ],
-    all: [
-      { id: 1, name: 'All Notes', count: 80 },
-      { id: 2, name: 'Shared With Me', count: 25 },
-      { id: 3, name: 'Trash', count: 5 },
-      { id: 4, name: 'Game', count: 28 },
-      { id: 5, name: 'Personal', count: 32 },
-      { id: 6, name: 'Work', count: 10 },
-    ],
   })
   const notes = ref([
     {
