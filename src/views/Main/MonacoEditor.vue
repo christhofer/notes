@@ -1,6 +1,7 @@
 <script setup>
   import { onMounted, ref } from 'vue'
   import { editor } from 'monaco-editor'
+  import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
   const props = defineProps({
     modelValue: {
       type: String,
@@ -10,6 +11,12 @@
   const emit = defineEmits(['update:modelValue'])
 
   const text = ref(props.modelValue)
+
+  self.MonacoEnvironment = {
+    getWorker () {
+      return new editorWorker()
+    },
+  }
 
   const initMonaco = () => {
     editor.defineTheme('myTheme', {

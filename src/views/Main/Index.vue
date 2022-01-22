@@ -1,9 +1,9 @@
 <script setup>
   import { computed, inject, ref } from 'vue'
   import ResizableColumn from './ResizableColumn.vue'
-  import MonacoEditor from '@/views/Main/MonacoEditor.vue'
-  import MarkdownPreview from '@/views/Main/MarkdownPreview.vue'
-  import draggable from 'vuedraggable'
+  import ListTags from './ListTags.vue'
+  import MonacoEditor from './MonacoEditor.vue'
+  import MarkdownPreview from './MarkdownPreview.vue'
 
   const user = inject('user')
   const tags = inject('tags')
@@ -19,7 +19,7 @@
     }
   }
   const showPreview = ref(true)
-  const drag = ref(false)
+  // const drag = ref(false)
 
   const text = ref('')
 
@@ -76,47 +76,30 @@
   <div>
     <resizable-column class="h-screen max-h-screen overflow-hidden">
       <template #col1>
-        <div class="w-1/3 flex flex-col border" style="min-width: 240px;">
+        <div class="w-1/3 flex flex-col border min-w-[240px]">
           <div class="px-2 h-12 flex justify-between items-center border-b gap-1">
-            <div>
-              <div class="truncate font-semibold leading-tight">{{ user.name }}</div>
-              <div class="truncate text-xs">{{ user.email }}</div>
+            <div class="flex gap-4 items-center">
+              <div>
+                <div class="truncate font-semibold leading-tight">{{ user.name }}</div>
+                <div class="truncate text-xs">{{ user.email }}</div>
+              </div>
+              <div>&blacktriangledown;</div>
             </div>
-            <div class="space-x-4 text-sm font-semibold">
+            <!-- <div class="space-x-4 text-sm font-semibold">
               <a href="#">Account</a>
               <a href="#">Logout</a>
-            </div>
+            </div> -->
           </div>
           <resizable-column class="flex-1 overflow-hidden">
             <template #col1>
-              <div class="w-1/3 border-r flex flex-col" style="min-width: 60px;">
-                <div class=" text-center py-2">
-                  <div class="text-lg font-semibold">Tags</div>
-                  <div class="space-x-2 text-xs">
-                    <button>Reorder</button>
-                  </div>
-                </div>
-                <div class="border-t border-b divide-y flex-1 overflow-y-auto">
-                  <draggable
-                    v-model="tags.all"
-                    group="people"
-                    item-key="id"
-                    @start="drag=true"
-                    @end="drag=false">
-                    <template #item="{element}">
-                      <div class="p-2 flex justify-between items-center cursor-pointer border-b">
-                        <div class="text-sm">{{ element.name }}</div>
-                        <div class="text-xs">{{ element.count }}</div>
-                      </div>
-                    </template>
-                  </draggable>
-                </div>
+              <div class="w-48 border-r flex flex-col min-w-[60px]">
+                <list-tags />
               </div>
             </template>
             <template #col2>
-              <div class="flex-1 border-l flex flex-col overflow-hidden" style="min-width: 180px;">
+              <div class="flex-1 border-l flex flex-col overflow-hidden min-w-[180px]">
                 <div class="text-center py-2">
-                  <div class="text-lg font-semibold">All Notes</div>
+                  <div class="text-lg font-semibold">{{ selectedTag.name }}</div>
                   <div class="space-x-2 text-xs">
                     <button>New</button>
                     <button>Sort</button>
@@ -136,9 +119,6 @@
                     </div>
                     <div class="truncate text-sm mt-2">{{ note.updated_at }}</div>
                     <div class="flex gap-2 mt-2 flex-wrap">
-                      <div v-for="id in note.tags" :key="id" class="px-2 py-1 text-xs rounded-full bg-primary-500 text-white dark:text-primary-200">
-                        {{ tags?.user.find(tag => tag.id === id).name }}
-                      </div>
                       <div v-for="id in note.tags" :key="id" class="px-2 py-1 text-xs rounded-full bg-primary-500 text-white dark:text-primary-200">
                         {{ tags?.user.find(tag => tag.id === id).name }}
                       </div>
